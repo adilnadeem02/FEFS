@@ -18,7 +18,7 @@ public class MainPageController {
     @FXML void login()
     {
         FEFS fefs = FEFS.getInstance();
-        if(fefs.login(email.getText(), pass.getText(), role.getButtonCell().getText()))
+        if(fefs.login(email.getText(), pass.getText(), role.getValue()))
         {
             System.out.println("SIGNED IN");
         }

@@ -75,7 +75,7 @@ class Database {
     }
 
     public static boolean signIn(String username, String password, String role) {
-        String query = "SELECT * FROM Users WHERE username = ? AND password = ? AND role = ?";
+        String query = "SELECT * FROM Users WHERE email = ? AND password_ = ? AND role = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -85,7 +85,7 @@ class Database {
             pstmt.setString(3, role);
 
             ResultSet rs = pstmt.executeQuery();
-            return rs.next(); // If a record is found, login is successful
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -4,7 +4,7 @@ import java.util.*;
 public class FEFS
 {
     List<Student> students;
-    List<Administrator> administrators;
+    List<Admin> administrators;
     List<Faculty> faculty;
     private static FEFS fefs = null;
 
