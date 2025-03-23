@@ -73,4 +73,22 @@ class Database {
         }
         return null;
     }
+
+    public static boolean signIn(String username, String password, String role) {
+        String query = "SELECT * FROM Users WHERE username = ? AND password = ? AND role = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            pstmt.setString(3, role);
+
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next(); // If a record is found, login is successful
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

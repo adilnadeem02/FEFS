@@ -21,4 +21,10 @@ public class FEFS
             fefs = new FEFS();
         return fefs;
     }
+
+    public boolean login(String u, String p, String r)
+    {
+        Database db = Database.getInstance();
+        return db.signIn(u, p, r);
+    }
 }
