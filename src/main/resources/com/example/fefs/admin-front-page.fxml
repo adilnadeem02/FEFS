@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fefs.AdminFrontPageController">
+  <tabs>
+    <Tab text="WELCOME">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="206.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME">
+                     <font>
+                        <Font size="40.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="signOutButton" layoutX="534.0" layoutY="332.0" mnemonicParsing="false" onAction="#signOut" text="Log Out" />
+                  <Text layoutX="290.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="to">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="258.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FEFC">
+                     <font>
+                        <Font size="40.0" />
+                     </font>
+                  </Text>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Manage Faculty">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="f_name" layoutX="188.0" layoutY="133.0" />
+                  <TextField fx:id="f_email" layoutX="188.0" layoutY="172.0" />
+                  <TextField fx:id="f_pass" layoutX="188.0" layoutY="208.0" />
+                  <TextField fx:id="f_depart" layoutX="188.0" layoutY="246.0" />
+                  <Label layoutX="123.0" layoutY="137.0" text="Name" />
+                  <Label layoutX="123.0" layoutY="176.0" text="Email" />
+                  <Label layoutX="110.0" layoutY="212.0" text="Password" />
+                  <Label layoutX="107.0" layoutY="250.0" text="Department" />
+                  <Label layoutX="186.0" layoutY="40.0" text="MANAGE FACULTY">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="f_add" layoutX="414.0" layoutY="146.0" mnemonicParsing="false" onAction="#add_faculty" text="ADD" />
+                  <Button fx:id="f_remove" layoutX="402.0" layoutY="190.0" mnemonicParsing="false" onAction="#rem_faculty" text="REMOVE" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Manage Student">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="s_name" layoutX="188.0" layoutY="133.0" />
+                  <TextField fx:id="s_email" layoutX="188.0" layoutY="172.0" />
+                  <TextField fx:id="s_pass" layoutX="188.0" layoutY="208.0" />
+                  <TextField fx:id="s_batch" layoutX="188.0" layoutY="246.0" />
+                  <Label layoutX="123.0" layoutY="137.0" text="Name" />
+                  <Label layoutX="123.0" layoutY="176.0" text="Email" />
+                  <Label layoutX="110.0" layoutY="212.0" text="Password" />
+                  <Label layoutX="124.0" layoutY="250.0" text="Batch" />
+                  <Label layoutX="186.0" layoutY="40.0" text="MANAGE STUDENT">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="s_add" layoutX="414.0" layoutY="146.0" mnemonicParsing="false" onAction="#add_student" text="ADD" />
+                  <Button fx:id="s_remove" layoutX="402.0" layoutY="190.0" mnemonicParsing="false" onAction="#rem_student" text="REMOVE" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>
