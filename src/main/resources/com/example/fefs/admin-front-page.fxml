@@ -80,5 +80,21 @@
             </AnchorPane>
          </content>
       </Tab>
+      <Tab text="Send Notifications">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="notifText" layoutX="166.0" layoutY="172.0" prefHeight="26.0" prefWidth="317.0" />
+                  <Label layoutX="78.0" layoutY="177.0" text="Notification" />
+                  <Label layoutX="210.0" layoutY="44.0" text="Notify Students">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="SendNotif" layoutX="278.0" layoutY="228.0" mnemonicParsing="false" onAction="#sendNotif" text="Send" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
   </tabs>
 </TabPane>

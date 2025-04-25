@@ -67,4 +67,14 @@ public class FEFS
     {
         return Database.getInstance().remStudent(text, text1, text2, text3);
     }
+
+    public List<String[]> getNotifs()
+    {
+        return Database.getInstance().getNotifs();
+    }
+
+    public boolean sendNotif(String text)
+    {
+        return Database.getInstance().sendNotifs(text);
+    }
 }

@@ -34,6 +34,9 @@ public class AdminFrontPageController
     @FXML Button s_add;
     @FXML Button s_remove;
 
+    @FXML TextField notifText;
+    @FXML Button SendNotif;
+
     @FXML void add_faculty()
     {
         if(FEFS.getInstance().addFaculty(f_name.getText(), f_email.getText(), f_pass.getText(),f_depart.getText()))
@@ -132,5 +135,25 @@ public class AdminFrontPageController
         }
     }
 
+    @FXML void sendNotif()
+    {
+        if(FEFS.getInstance().sendNotif(notifText.getText()))
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("SUCCESS");
+            alert.setHeaderText(null);
+            alert.setContentText("Notifcations Sent!");
+            alert.showAndWait();
+        }
+
+        else
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ERROR");
+            alert.setHeaderText(null);
+            alert.setContentText("AN ERROR OCCURRED!");
+            alert.showAndWait();
+        }
+    }
 
 }

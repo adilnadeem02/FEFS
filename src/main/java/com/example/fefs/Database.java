@@ -296,4 +296,45 @@ class Database {
         }
         return false;
     }
+
+    public List<String[]> getNotifs()
+    {
+        List<String[]> feedbackList = new ArrayList<>();
+        String query = "SELECT * FROM Notifications";
+
+        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String[] feedback = new String[5];
+                feedback[0] = String.valueOf(rs.getInt("notification_id"));
+                feedback[1] = String.valueOf(rs.getString("message"));
+                feedback[2] = String.valueOf(rs.getString("created_at"));
+                feedbackList.add(feedback);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return feedbackList;
+    }
+
+    public boolean sendNotifs(String text)
+    {
+        try(Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+            String insertUser = "INSERT INTO Notifications (message) VALUES (?)";
+            PreparedStatement stmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, text);
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -1,13 +1,13 @@
 package com.example.fefs;
 
 import com.sun.tools.javac.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,6 +32,9 @@ public class StudentFrontPageController
 
     int instructorID;
     int courseID;
+
+    @FXML
+    private TableView<NotifClass> table;
 
     public void initialize() throws SQLException {
         List<String[]> courses = FEFS.getInstance().returnCourses();
@@ -96,8 +99,36 @@ public class StudentFrontPageController
         alert.showAndWait();
     }
 
-    @FXML void viewNotifs()
-    {
+    @FXML
+    void viewNotifs() {
+        List<String[]> feedback = FEFS.getInstance().getNotifs();
 
+        if (table == null)
+            table = new TableView<>();
+
+        if (table.getColumns().isEmpty()) {
+            TableColumn<NotifClass, Integer> notifIdCol = new TableColumn<>("Notification ID");
+            notifIdCol.setCellValueFactory(new PropertyValueFactory<>("notificationId"));
+
+            TableColumn<NotifClass, String> messageCol = new TableColumn<>("Message");
+            messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
+
+            TableColumn<NotifClass, String> createdAtCol = new TableColumn<>("Created At");
+            createdAtCol.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
+
+            table.getColumns().addAll(notifIdCol, messageCol, createdAtCol);
+        }
+
+        ObservableList<NotifClass> notifData = FXCollections.observableArrayList();
+        for (String[] feedbacks : feedback) {
+            notifData.add(new NotifClass(
+                    Integer.parseInt(feedbacks[0]),
+                    feedbacks[1],
+                    feedbacks[2]
+            ));
+        }
+
+        table.setItems(notifData);
     }
+
 }
