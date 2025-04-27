@@ -8,6 +8,25 @@ class Database {
     private static final String URL = "jdbc:mysql://localhost:3306/FacultyEvaluationDB";
     private static Database db = null;
 
+
+    private static String testDbUrl = null;
+    private static String testDbUser = null;
+    private static String testDbPassword = null;
+
+    public static void setTestMode(String url, String user, String password) {
+        testDbUrl = url;
+        testDbUser = user;
+        testDbPassword = password;
+    }
+
+    private static Connection getConnection() throws SQLException {
+        if (testDbUrl != null && testDbUser != null && testDbPassword != null) {
+            return DriverManager.getConnection(testDbUrl, testDbUser, testDbPassword);
+        } else {
+            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        }
+    }
+
     private Database()
     {}
 
@@ -33,7 +52,7 @@ class Database {
     public static boolean signIn(String username, String password, String role) {
         String query = "SELECT * FROM Users WHERE email = ? AND password_ = ? AND role = ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, username);
@@ -52,7 +71,7 @@ class Database {
         String query = "SELECT course_name, course_id FROM Courses";
         List<String[]> courses = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
 
@@ -74,7 +93,7 @@ class Database {
                 "WHERE C.course_name = ?;";
         List<String[]> instructors = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, course);
@@ -93,7 +112,7 @@ class Database {
     {
         String query = "INSERT INTO Feedback (faculty_id, course_id, rating, comments, created_at) VALUES (?, ?, ?, ?, NOW())";
 
-        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setInt(1, instructorID);
@@ -113,7 +132,7 @@ class Database {
     {
         String query = "SELECT user_id FROM Users WHERE email = ? AND password_ = ? AND role = ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, u);
@@ -135,7 +154,7 @@ class Database {
         List<String[]> feedbackList = new ArrayList<>();
         String query = "SELECT feedback_id, course_id, rating, comments, created_at FROM Feedback WHERE faculty_id = ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setInt(1, faculty_id);
@@ -158,7 +177,7 @@ class Database {
     }
 
     public boolean addFaculty(String name, String email, String pass, String dep) {
-        try(Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try(Connection conn = getConnection()) {
             String insertUser = "INSERT INTO Users (name, email, password_, role) VALUES (?, ?, ?, 'Faculty')";
             PreparedStatement stmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, name);
@@ -184,7 +203,7 @@ class Database {
     }
 
     public boolean remFaculty(String name, String email, String pass, String dep) {
-        try(Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try(Connection conn = getConnection()) {
             String getUserId = "SELECT user_id FROM Users WHERE email = ? AND password_ = ? AND role = 'Faculty'";
             PreparedStatement stmt = conn.prepareStatement(getUserId);
             stmt.setString(1, email);
@@ -207,7 +226,7 @@ class Database {
     }
 
     public boolean addStudent(String name, String email, String pass, String batch) {
-        try(Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try(Connection conn = getConnection()) {
             String insertUser = "INSERT INTO Users (name, email, password_, role) VALUES (?, ?, ?, 'Student')";
             PreparedStatement stmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, name);
@@ -232,7 +251,7 @@ class Database {
     }
 
     public boolean remStudent(String name, String email, String pass, String batch) {
-        try(Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try(Connection conn = getConnection()) {
             String getUserId = "SELECT user_id FROM Users WHERE email = ? AND password_ = ? AND role = 'Student'";
             PreparedStatement stmt = conn.prepareStatement(getUserId);
             stmt.setString(1, email);
@@ -258,7 +277,7 @@ class Database {
         List<String[]> feedbackList = new ArrayList<>();
         String query = "SELECT * FROM Notifications";
 
-        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             ResultSet rs = pstmt.executeQuery();
@@ -279,7 +298,7 @@ class Database {
 
     public boolean sendNotifs(String text)
     {
-        try(Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try(Connection conn = getConnection()) {
             String insertUser = "INSERT INTO Notifications (message) VALUES (?)";
             PreparedStatement stmt = conn.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, text);
