@@ -10,7 +10,7 @@ class Student extends User {
     public void submitFeedback(int facultyId, int courseId, int rating, String comments)
     {
         Database db = Database.getInstance();
-        db.writeFeedback(userId, facultyId, courseId, rating, comments);
+        db.submitFeedback(facultyId, courseId, rating, comments);
     }
 
     public void receiveNotification(){}

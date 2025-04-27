@@ -30,50 +30,6 @@ class Database {
         return URL;
     }
 
-    public static void writeFeedback(int studentId, int facultyId, int courseId, int rating, String comments) {
-        String query = "INSERT INTO Feedback (student_id, faculty_id, course_id, rating, comments, created_at) VALUES (?, ?, ?, ?, ?, NOW())";
-
-        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, studentId);
-            pstmt.setInt(2, facultyId);
-            pstmt.setInt(3, courseId);
-            pstmt.setInt(4, rating);
-            pstmt.setString(5, comments);
-
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Feedback successfully recorded.");
-            } else {
-                System.out.println("Failed to record feedback.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static ResultSet getFeedbackForFaculty(int facultyId) {
-        String query = "SELECT f.feedback_id, s.name AS student_name, c.course_name, f.rating, f.comments, f.created_at " +
-                "FROM Feedback f " +
-                "JOIN Students s ON f.student_id = s.student_id " +
-                "JOIN Courses c ON f.course_id = c.course_id " +
-                "WHERE f.faculty_id = ?";
-
-        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setInt(1, facultyId);
-            ResultSet rs = pstmt.executeQuery();
-
-            return rs;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public static boolean signIn(String username, String password, String role) {
         String query = "SELECT * FROM Users WHERE email = ? AND password_ = ? AND role = ?";
 
@@ -133,7 +89,7 @@ class Database {
         return instructors;  // Return list of instructors
     }
 
-    public void submitFeedback(int instructorID, int courseID, int i, String text)
+    public static void submitFeedback(int instructorID, int courseID, int i, String text)
     {
         String query = "INSERT INTO Feedback (faculty_id, course_id, rating, comments, created_at) VALUES (?, ?, ?, ?, NOW())";
 

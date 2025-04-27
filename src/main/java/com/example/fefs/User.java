@@ -17,4 +17,24 @@ public class User {
 
     public void login(String email, String password){}
     public void logout(){}
+
+    public String getName() {
+        return name;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

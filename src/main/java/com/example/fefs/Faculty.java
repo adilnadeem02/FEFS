@@ -1,14 +1,15 @@
 package com.example.fefs;
 
 import java.sql.ResultSet;
+import java.util.List;
 
 class Faculty extends User {
     public Faculty(int userId, String name, String email, String password, String role) {
         super(userId, name, email, password, role);
     }
 
-    public ResultSet viewFeedbackReports()
+    public List<String[]> viewFeedbackReports()
     {
-        return Database.getFeedbackForFaculty(this.userId);
+        return Database.getFeedback(this.userId);
     }
 }
